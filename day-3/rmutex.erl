@@ -33,6 +33,7 @@ free() ->
 	    print_acquire_lock(Pid), %% timer:sleep(2000),
 	    try_link(Pid), 
 	    busy(Pid)
+
     end.
 
 busy(LockHolder) ->
@@ -42,6 +43,7 @@ busy(LockHolder) ->
 	    print_release_lock(LockHolder),
 	    unlink(LockHolder),  
 	    free();
+
 	{'EXIT', LockHolder, Reason} ->
 	    print_expire_lock(LockHolder, Reason),
 	    unlink(LockHolder),  
@@ -88,3 +90,5 @@ test_lock() ->
     io:format("[~p] Release & terminate!~n", [self()]),
     ok. 
 
+
+%% Free = acquire?c -> link.?c ->
